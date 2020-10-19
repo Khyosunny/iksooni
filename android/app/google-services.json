@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "3495669971",
+    "firebase_url": "https://iksooni-ca333.firebaseio.com",
+    "project_id": "iksooni-ca333",
+    "storage_bucket": "iksooni-ca333.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3495669971:android:690424d2f9078f217ca426",
+        "android_client_info": {
+          "package_name": "com.iksooni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3495669971-u6r9j5ktv84t0l7nt43lnnms94v67eun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZZSS-XPtZ_Jwr7u3Sbz5xRchP2GLAmSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3495669971-u6r9j5ktv84t0l7nt43lnnms94v67eun.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
