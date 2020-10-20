@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, ScrollView, TextInput, Text, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
+import { fire_db } from '../fbase'
+
 
 export default ({navigation,route}) => {
-  const [list, setList] = useState(null)
-  const [value, SetValue] = useState('');
+  const { uid, text } = route.params
+  const [value, setValue] = useState(text);
+
+  console.log(uid)
+
 
   const onPress = () => {
     Keyboard.dismiss()
+    fire_db.collection('posts').doc(`${uid}`).update({
+      text: value
+    })
   }
-
-  useEffect(() => {
-    console.log(route)
-    setList(route.params)
-  },[])
   
-  return list && (
+  return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.saveBtn} onPress={onPress}>
         <Text style={styles.saveBtnText}>저장</Text>
       </TouchableOpacity>
-      <TextInput style={styles.input} onChangeText={text => SetValue(text)} value={list.text} multiline={true}/>
+      <TextInput style={styles.input} onChangeText={text => setValue(text)} value={value} multiline={true}/>
     </View>
   )
 }

@@ -17,8 +17,8 @@ export default ({navigation}) => {
       </View>
       <ScrollView style={styles.scrollContainer}>
         {
-          data && data.map((item, i)=>{
-            return (<Card item={item} key={i} navigation={navigation}/>)
+          data && data.map((item)=>{
+            return (<Card item={item} key={item.uid} itemID={item.uid} navigation={navigation}/>)
           })
         }
       </ScrollView>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import { DataContext } from '../App'
+
 import { fire_db } from '../fbase'
 
 export default () => {
@@ -8,8 +9,7 @@ export default () => {
  
   const now = new Date();
 
-
-
+ 
 
 
   const post = useContext(DataContext);
@@ -19,10 +19,15 @@ export default () => {
   const listSave = () => {
     fire_db.collection('posts').add({
       text: value,
-      date: `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일`
+      date: `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일`,
+      createdTime: Date.now(),
     })
   }
-  
+
+
+
+
+
   const onPress = () => {
     listSave()
     console.log(data)
