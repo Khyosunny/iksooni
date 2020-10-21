@@ -4,20 +4,22 @@ import Card from '../components/Card'
 import { DataContext } from '../App'
 
 export default ({navigation}) => {
-
   const post = useContext(DataContext)
   const { data } = post
 
+  const onPressClick = () => {
+    navigation.navigate('NewPostPage');
+  }
+
+
   return (
     <>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.writeBtn} onPress={()=>{navigation.navigate('NewPostPage')}} >
-          <Text style={styles.writeBtnText}>글쓰기</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.writeBtn} onPress={onPressClick} >
+        <Text style={styles.writeBtnText}>＋</Text>
+      </TouchableOpacity>
       <ScrollView style={styles.scrollContainer}>
         {
-          data && data.map((item)=>{
+          data.map((item)=>{
             return (<Card item={item} key={item.uid} itemID={item.uid} navigation={navigation}/>)
           })
         }
@@ -27,21 +29,24 @@ export default ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff'
-  },
   writeBtn: {
-    padding: 10,
-    backgroundColor: '#fff',
-    borderColor: 'grey',
-    borderWidth: 1,
-    width: 80,
-    alignSelf: 'flex-end'
+    backgroundColor: '#379BB5',
+    width: 60,
+    height: 60,
+    borderRadius: 60,
+    zIndex: 10,
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
   },
   writeBtnText: {
-    textAlign: 'center'
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    lineHeight: 60,
+    fontSize: 30,
+    color: '#fff'
   },
   scrollContainer: {
-    backgroundColor: 'orange'
+    backgroundColor: '#EBE9E7'
   }
 })

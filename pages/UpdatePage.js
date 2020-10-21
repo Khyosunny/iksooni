@@ -1,43 +1,41 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Alert, BackHandler } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, ScrollView, TextInput, Text, StyleSheet, TouchableOpacity, Keyboard, Alert, ToastAndroid } from 'react-native';
 import { fire_db } from '../fbase'
-import { DataContext } from '../App'
+import { StackActions } from '@react-navigation/native';
 
-export default ({navigation}) => {
-  const post = useContext(DataContext)
-  const { data } = post
-
-  const [titleValue, setTitleValue] = useState('');
-  const [value, setValue] = useState('');
+export default ({navigation,route}) => {
+  const { uid, text, title } = route.params
+  const [titleValue, setTitleValue] = useState(title);
+  const [value, setValue] = useState(text);
   const [saved, setSaved] = useState(true);
-  const undefineeValue = Boolean(value)
-  const undefineeTitleValue = Boolean(titleValue)
 
-  const now = new Date();
+  const showToast = () => {
+    ToastAndroid.show('입력한 내용이 없어 노트를 저장하지 않았어요.', ToastAndroid.SHORT);
+  };
 
-
-
-
-
-  const listSave = () => {
-    fire_db.collection('posts').add({
-      title: titleValue,
-      text: value,
-      date: `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일`,
-      createdTime: Date.now(),
-    })
-  }
 
   const onPress = () => {
-    listSave();
-    setSaved(true)
-    Keyboard.dismiss();
+    if(value === '' && titleValue === '') {
+      const b = async () => {
+        setSaved(true)
+        await fire_db.collection('posts').doc(`${uid}`).delete()
+        await navigation.popToTop()
+        showToast()
+      }
+      b()
+    } else {
+      fire_db.collection('posts').doc(`${uid}`).update({
+        title: titleValue,
+        text: value
+      })
+      setSaved(true)
+      
+    }
   }
-
- 
+  
   useEffect(() => {
     const backAction = navigation.addListener('beforeRemove', (e) => {
-      if((undefineeValue === true || undefineeTitleValue === true) && saved === false) {
+      if(saved === false) {
         Keyboard.dismiss();
         e.preventDefault();
         Alert.alert(
@@ -46,15 +44,21 @@ export default ({navigation}) => {
           [
             { text: '취소', style: 'cancel', onPress: () => {} },
             { text: '저장 안 함', style: 'destructive', onPress: () => navigation.dispatch(e.data.action)},
-            { text: '저장', style: 'cancel', onPress: () => {onPress()} }
+            { text: '저장', style: 'destructive', onPress: () => {onPress(); } }
           ],
+          { cancelable: false }
         );
       } else {
         navigation.dispatch(e.data.action)
       }
+      // setSaved(true)
     })
     return () => backAction();
-  },[saved, value, undefineeValue, titleValue, undefineeTitleValue])
+  },[saved, value, titleValue])
+
+
+
+  console.log(saved)
 
 
   return (
@@ -64,8 +68,8 @@ export default ({navigation}) => {
           <Text style={styles.saveBtnText}>저장</Text>
         </TouchableOpacity>
       </View>
-      <TextInput style={styles.titleInput} onChangeText={text => {setTitleValue(text); setSaved(false)}} value={titleValue} placeholder='제목'/>
-      <TextInput autoFocus={true} style={styles.noteInput} onChangeText={text => {setValue(text); setSaved(false)}} value={value} placeholder='노트' multiline={true}/>
+      <TextInput style={styles.titleInput} onChangeText={t => {setTitleValue(t); setSaved(false)}} value={titleValue} placeholder='제목이 없습니다'/>
+      <TextInput style={styles.noteInput} onChangeText={t => {setValue(t); setSaved(false)}} value={value} placeholder='노트' multiline={true}/>
     </View>
   )
 }
