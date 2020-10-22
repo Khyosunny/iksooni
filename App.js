@@ -9,7 +9,7 @@ export const DataContext = React.createContext()
 
 export default () => {
   const getData = async () => {
-      await fire_db.collection('posts').orderBy("createdTime", "desc").onSnapshot(response => {
+      fire_db.collection('posts').orderBy("createdTime", "desc").onSnapshot(response => {
       const result = response.docs.map((item) => ({
         uid: item.id,
         ...item.data()

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, ScrollView, TextInput, Text, StyleSheet, TouchableOpacity, Keyboard, Alert, ToastAndroid } from 'react-native';
 import { fire_db } from '../fbase'
-import { StackActions } from '@react-navigation/native';
 
 export default ({navigation,route}) => {
   const { uid, text, title } = route.params

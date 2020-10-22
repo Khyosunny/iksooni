@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Alert, BackHandler } from 'react-native';
 import { fire_db } from '../fbase'
 import { DataContext } from '../App'
+import BackButton from '../components/BackButton'
 
 export default ({navigation}) => {
   const post = useContext(DataContext)
@@ -19,8 +20,8 @@ export default ({navigation}) => {
 
 
 
-  const listSave = () => {
-    fire_db.collection('posts').add({
+  const listSave = async () => {
+    await fire_db.collection('posts').add({
       title: titleValue,
       text: value,
       date: `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일`,
@@ -28,10 +29,10 @@ export default ({navigation}) => {
     })
   }
 
-  const onPress = () => {
-    listSave();
+  const onPress = async () => {
     setSaved(true)
-    Keyboard.dismiss();
+    await listSave();
+    await navigation.popToTop()
   }
 
  
@@ -60,6 +61,7 @@ export default ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.topMenu}>
+        <BackButton navigation={navigation}/>
         <TouchableOpacity style={styles.saveBtn} onPress={onPress}>
           <Text style={styles.saveBtnText}>저장</Text>
         </TouchableOpacity>
@@ -79,12 +81,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#dbdbdb',
     height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
+  
   saveBtn: {
-    width: 80,
+    width: 60,
     height: 50,
     borderRadius: 50,
-    alignSelf: 'flex-end',
+    backgroundColor: '#dbdbdb'
+
   },
   saveBtnText: {
     fontSize: 20,

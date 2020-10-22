@@ -3,18 +3,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import MainPage from '../pages/MainPage';
 import DetailPage from '../pages/DetailPage';
-import MyPostListPage from '../pages/MyPostListPage';
+import NoteListPage from '../pages/NoteListPage';
 import UpdatePage from '../pages/UpdatePage';
-import NewPostPage from '../pages/NewPostPage';
+import AddNotePage from '../pages/AddNotePage';
 
 const Stack = createStackNavigator();
 
 export default () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="MyPostListPage" component={MyPostListPage}/>
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen name="NoteListPage" component={NoteListPage}/>
       <Stack.Screen name="UpdatePage" component={UpdatePage}/>
-      <Stack.Screen name="NewPostPage" component={NewPostPage}/>
+      <Stack.Screen name="AddNotePage" component={AddNotePage}/>
       <Stack.Screen name="MainPage" component={MainPage}/>
       <Stack.Screen name="DetailPage" component={DetailPage}/>
     </Stack.Navigator>
