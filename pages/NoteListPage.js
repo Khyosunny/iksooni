@@ -16,9 +16,8 @@ export default ({navigation}) => {
     <>
       <AddButton navigation={navigation} />
       <AnimatedHeader animatedValue={offset} data={data.length} />
-      <ScrollView contentContainerStyle={{paddingTop: 200}} scrollEventThrottle={16} style={styles.scrollContainer} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
-            { useNativeDriver: false }
-          )}>
+      <ScrollView contentContainerStyle={{paddingTop: 195}} scrollEventThrottle={16} style={styles.scrollContainer} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
+            { useNativeDriver: false })}>
         {
           data.map((item)=>{
             return (<Card item={item} key={item.uid} itemID={item.uid} navigation={navigation}/>)

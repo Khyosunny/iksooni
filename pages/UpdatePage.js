@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, ScrollView, TextInput, Text, StyleSheet, TouchableOpacity, Keyboard, Alert, ToastAndroid } from 'react-native';
-import { fire_db } from '../fbase'
+import { fire_db } from '../fbase';
+import BackButton from '../components/BackButton';
+
 
 export default ({navigation,route}) => {
   const { uid, text, title } = route.params
@@ -63,6 +65,7 @@ export default ({navigation,route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.topMenu}>
+        <BackButton navigation={navigation}/>
         <TouchableOpacity style={styles.saveBtn} onPress={onPress}>
           <Text style={styles.saveBtnText}>저장</Text>
         </TouchableOpacity>
@@ -82,12 +85,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#dbdbdb',
     height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   saveBtn: {
-    width: 80,
+    width: 60,
     height: 50,
     borderRadius: 50,
-    alignSelf: 'flex-end',
+    marginRight: 10,
   },
   saveBtnText: {
     fontSize: 20,

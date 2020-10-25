@@ -1,8 +1,8 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Alert, BackHandler } from 'react-native';
-import { fire_db } from '../fbase'
-import { DataContext } from '../App'
-import BackButton from '../components/BackButton'
+import { fire_db } from '../fbase';
+import { DataContext } from '../App';
+import BackButton from '../components/BackButton';
 
 export default ({navigation}) => {
   const post = useContext(DataContext)
@@ -89,8 +89,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 50,
     borderRadius: 50,
-    backgroundColor: '#dbdbdb'
-
+    marginRight: 10,
   },
   saveBtnText: {
     fontSize: 20,
